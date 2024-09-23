@@ -10,7 +10,6 @@ public class LuckyTickets {
         int min = -1;
         int max = -1;
 
-        // Ввод меньшего номера билета
         while (min < 0 || min > 999999) {
             System.out.print("Введите меньший номер билета (0 - 999999): ");
             if (scanner.hasNextInt()) {
@@ -20,11 +19,10 @@ public class LuckyTickets {
                 }
             } else {
                 System.out.println("Ошибка: введите целое число.");
-                scanner.next(); // Очищаем неверный ввод
+                scanner.next();
             }
         }
 
-        // Ввод большего номера билета
         while (max <= min || max > 999999) {
             System.out.print("Введите больший номер билета (больше " + min + " и до 999999): ");
             if (scanner.hasNextInt()) {
@@ -34,13 +32,13 @@ public class LuckyTickets {
                 }
             } else {
                 System.out.println("Ошибка: введите целое число.");
-                scanner.next(); // Очищаем неверный ввод
+                scanner.next();
             }
         }
+        scanner.close();
 
         int luckyCount = 0;
 
-        // Подсчет счастливых билетов
         for (int i = min; i <= max; i++) {
             if (isLuckyTicket(i)) {
                 luckyCount++;
@@ -50,9 +48,8 @@ public class LuckyTickets {
         System.out.println("Количество счастливых билетов на катушке: " + luckyCount);
     }
 
-    // Метод для определения, является ли билет счастливым
     private static boolean isLuckyTicket(int ticketNumber) {
-        String ticketStr = String.format("%06d", ticketNumber); // Форматируем номер в шесть цифр
+        String ticketStr = String.format("%06d", ticketNumber);
 
         int sumFirstHalf = Character.getNumericValue(ticketStr.charAt(0)) +
                 Character.getNumericValue(ticketStr.charAt(1)) +
