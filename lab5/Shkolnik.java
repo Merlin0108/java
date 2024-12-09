@@ -1,42 +1,32 @@
 package lab5;
 
-class Shkolnik extends Uchashchysya {
+class Shkolnik extends Yuchashchiy {
     private int[] grades; // Годовые оценки
-    private boolean[] olympiadWins; // Участие в олимпиадах: 0 - школьная, 1 - городская, 2 - областная
+    private boolean hasOlympiadPrize; // Участие в олимпиадах
 
-    public Shkolnik(String name, String gender, int age, int[] grades, boolean[] olympiadWins) {
+    public Shkolnik(String name, String gender, int age, int[] grades, boolean hasOlympiadPrize) {
         super(name, gender, age);
         this.grades = grades;
-        this.olympiadWins = olympiadWins;
+        this.hasOlympiadPrize = hasOlympiadPrize;
     }
 
-    @Override
-    public boolean isEligibleForScholarship() {
-        int countFives = 0;
-        boolean hasOlympiad = olympiadWins[2]; // Участие в областной олимпиаде
-
+    public boolean hasSpecialScholarship() {
+        boolean has5inSubjects = grades[0] == 5 && grades[1] == 5 && grades[2] == 5 && grades[3] == 5;
+        boolean hasOtherGrades = true;
         for (int grade : grades) {
-            if (grade == 5) {
-                countFives++;
-            } else if (grade < 4) {
-                return false; // Если есть хотя бы одна тройка
+            if (grade < 4) {
+                hasOtherGrades = false;
+                break;
             }
         }
-
-        return countFives >= 4 && hasOlympiad; // Проверка условий для стипендии
+        return has5inSubjects && hasOtherGrades && (hasOlympiadPrize);
     }
 
-    public boolean hasFirstPlaceInOlympiad() {
-        return olympiadWins[0]; // Если первое место в школьной олимпиаде
+    public boolean isGirlWithOlympiadPrize() {
+        return "female".equalsIgnoreCase(getGender()) && hasOlympiadPrize;
     }
 
-    @Override
     public void printInfo() {
-        super.printInfo();
-        System.out.print("Годовые оценки: ");
-        for (int grade : grades) {
-            System.out.print(grade + " ");
-        }
-        System.out.println();
+        System.out.println("Школьник: " + getName() + ", Пол: " + getGender() + ", Возраст: " + getAge());
     }
 }

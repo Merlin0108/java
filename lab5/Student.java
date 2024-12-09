@@ -1,38 +1,38 @@
 package lab5;
 
-class Student extends Uchashchysya {
-    private double[] sessionGrades; // Оценки за сессии
-    protected double[] courseWorkGrades; // Оценки за курсовые работы
+class Student extends Yuchashchiy {
+    private int[] semesterGrades; // Оценки за сессию
+    private int[] courseworkGrades; // Оценки за курсовые работы
 
-    public Student(String name, String gender, int age, double[] sessionGrades, double[] courseWorkGrades) {
+    public Student(String name, String gender, int age, int[] semesterGrades, int[] courseworkGrades) {
         super(name, gender, age);
-        this.sessionGrades = sessionGrades;
-        this.courseWorkGrades = courseWorkGrades;
+        this.semesterGrades = semesterGrades;
+        this.courseworkGrades = courseworkGrades;
     }
 
-    @Override
-    public boolean isEligibleForScholarship() {
-        double averageSessionGrade = calculateAverage(sessionGrades);
-        double averageCourseWorkGrade = calculateAverage(courseWorkGrades);
+    public boolean hasSpecialScholarship() {
+        double averageGrade = calculateAverage(semesterGrades);
+        boolean has5ForCoursework = true;
 
-        return averageSessionGrade >= 4.75 && averageCourseWorkGrade == 5;
+        for (int grade : courseworkGrades) {
+            if (grade != 5) {
+                has5ForCoursework = false;
+                break;
+            }
+        }
+
+        return averageGrade >= 4.75 && has5ForCoursework;
     }
 
-    private double calculateAverage(double[] grades) {
-        double sum = 0;
-        for (double grade : grades) {
+    private double calculateAverage(int[] grades) {
+        int sum = 0;
+        for (int grade : grades) {
             sum += grade;
         }
-        return sum / grades.length;
+        return (double) sum / grades.length;
     }
 
-    @Override
     public void printInfo() {
-        super.printInfo();
-        System.out.print("Оценки за сессии: ");
-        for (double grade : sessionGrades) {
-            System.out.print(grade + " ");
-        }
-        System.out.println();
+        System.out.println("Студент: " + getName() + ", Пол: " + getGender() + ", Возраст: " + getAge());
     }
 }
