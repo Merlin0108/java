@@ -1,5 +1,5 @@
 package lab6;
 
-interface ComparableYuchashchiy {
+public interface ComparableYuchashchiy {
     double getAverageGrade();
 }
